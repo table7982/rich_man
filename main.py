@@ -1,4 +1,5 @@
 import random
+import time
 
 class Country():
     def __init__(self, cost, position, name, color=None):
@@ -228,7 +229,7 @@ class Player():
             circle_num = self.position // map_item_num
             self.position = self.position % map_item_num
             self.money += 2000 * circle_num
-            print(f"你完成了一圈,你的钱增加2000,你现在的钱是{self.money}")
+            print(f"{self.color}完成了一圈,钱增加2000,你现在的钱是{self.money}")
         print(f'{self.color}投到了{step},现在你在第{self.position}个格子。')
         print(f'{self.color}走到了{map_item_list[self.position].name}。')
         return self.position
@@ -285,7 +286,7 @@ class Player():
             print(f'这块地名字是{country_dir[str(self.position)].name}')
             print(f'这块地价格是{country_dir[str(self.position)].cost}')
             if country_dir[str(self.position)].situation == "none":
-                if self.money > country_dir[str(self.position)].cost:
+                if self.money >= country_dir[str(self.position)].cost:
                     print(f"你的钱有{self.money},你可以买")
                     ret = True
                 else:
@@ -307,11 +308,11 @@ class Player():
             country_dir[str(self.position)].buyed(self.color)
             self.country_index_list.append(str(self.position))
     def show_message(self):
-        print('----------------------')
-        print(f'你的颜色是{self.color}')
-        print(f'你的钱有{self.money}')
-        print(f'你在序号{self.position}的格子上')
-        print(f'格子的名字是{map_item_list[self.position].name}')
+        print('||----------------------')
+        print(f'||你的颜色是{self.color}')
+        print(f'||你的钱有{self.money}')
+        print(f'||你在序号{self.position}的格子上')
+        print(f'||格子的名字是{map_item_list[self.position].name}')
         country_name_list = []
         for country_index in self.country_index_list:
             country_name_list.append(country_dir[country_index].name)
@@ -333,12 +334,25 @@ while 1:
     print(f'------第{cnt}轮--------')
     if red.lao == False:
         red.tou_shai_zi()
+        time.sleep(2)
         red.auto_action()
+        time.sleep(2)
         red.show_message()
+        time.sleep(2)
+        print("红色玩家完成一轮.")
+    else:
+        red.lao = False
+    print('***********')
     if blue.lao == False:
         blue.tou_shai_zi()
+        time.sleep(2)
         blue.auto_action()
+        time.sleep(2)
         blue.show_message()
+        time.sleep(2)
+    else:
+        blue.lao = False
+    print("蓝色玩家完成一轮.")
     print("------------------------")
     cnt += 1
     input('输入任意键开启下一轮')
